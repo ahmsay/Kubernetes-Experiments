@@ -2,24 +2,24 @@
 This repository contains various examples that can be hard to find in the official Kubernetes documentation.
 
 To make it shorter, I gave an alias to the kubectl utility:
-</br>
 
 ```bash
 alias k=kubectl
 ```
 
 ## Table of Contents
-**[Internal Request](#internal-request)**<br>
-**[Verify External Variables](#verify-external-variables)**<br>
+**[Sending Internal Request](#sending-internal-request)**<br>
+**[Verifying External Variables](#verifying-external-variables)**<br>
+**[Accessing Nodes](#accessing-nodes)**<br>
 
-## Internal Request
+## Sending Internal Request
 It's possible to send a request to a resource without exposing it to a NodePort service.
 ### Request to Pod
 Run an example web application in a pod.
 ```bash
 k run myapp --image=httpd
 ```
-Get the ip and port of the pod (if port is not shown, default port is 80 like in this example).
+Get the IP and port of the pod (if port is not shown, default port is 80 like in this example).
 ```bash
 k get pod -o wide
 ```
@@ -54,8 +54,8 @@ Send an internal request to the ClusterIP service.
 ```bash
 k run nginxtmp --image=nginx:alpine --restart=Never --rm -it -- curl -m 5 <ip>:8080
 ```
-## Verify External Variables
-To verify the environment variables, configmap values or secret values you gave are passed to the container, do the following steps.<br>
+## Verifying External Variables
+To verify the environment variables, configmap values or secret values you gave are passed to the container, do the following steps.
 
 Create a pod with an environment variable.
 ```bash
@@ -66,3 +66,18 @@ Verify the environment inside the container.
 k exec myapp -- printenv DNS_DOMAIN
 ```
 The output will be `cluster`.
+## Accessing Nodes
+You can access your worker nodes without requiring their IP.
+
+List your nodes and their names.
+```bash
+k get node
+```
+Connect to your node with its name.
+```bash
+ssh <node-name>
+```
+You can also execute a single command without staying connected.
+```bash
+ssh <node-name> -- echo hello
+```
