@@ -10,6 +10,7 @@ alias k=kubectl
 
 ## Table of Contents
 **[Internal Request](#internal-request)**<br>
+**[Verify External Variables](#verify-external-variables)**<br>
 
 ## Internal Request
 It's possible to send a request to a resource without exposing it to a NodePort service.
@@ -48,4 +49,15 @@ k get svc
 Send an internal request to the ClusterIP service.
 ```bash
 k run nginxtmp --image=nginx:alpine --restart=Never --rm -it -- curl -m 5 <ip>:8080
+```
+## Verify External Variables
+To verify the environment variables, configmap values or secret values you gave are passed to the container, do the following steps.<br>
+
+Create a pod with an environment variable.
+```bash
+k run myapp --image=nginx --env="DNS_DOMAIN=cluster"
+```
+Verify the environment inside the container.
+```bash
+k exec myapp -- printenv DNS_DOMAIN
 ```
