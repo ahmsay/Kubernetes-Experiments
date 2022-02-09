@@ -27,6 +27,10 @@ Send an internal request directly to the pod.
 ```bash
 k run nginxtmp --image=nginx:alpine --restart=Never --rm -it -- curl -m 5 <ip>:<port>
 ```
+The output will be like this:
+```
+<html><body><h1>It works!</h1></body></html>
+```
 Lets examine the parameters:
 - --restart=Never: To prevent the container to restart
 - --rm: Automatically deletes the pod when the container stops
@@ -61,3 +65,4 @@ Verify the environment inside the container.
 ```bash
 k exec myapp -- printenv DNS_DOMAIN
 ```
+The output will be `cluster`.
