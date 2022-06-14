@@ -11,6 +11,7 @@ alias k=kubectl
 **[Sending Internal Request](#sending-internal-request)**<br>
 **[Verifying External Variables](#verifying-external-variables)**<br>
 **[Accessing Nodes](#accessing-nodes)**<br>
+**[Listing All Resources](#listing-all-resources)**<br>
 
 ## Sending Internal Request
 It's possible to send a request to a resource without exposing it to a NodePort service.
@@ -80,4 +81,9 @@ ssh <node-name>
 You can also execute a single command without staying connected.
 ```bash
 ssh <node-name> -- echo hello
+```
+## Listing All Resources
+You can't get all resources with `kubectl get all` command. To do that, you should use the following command:
+```bash
+kubectl api-resources --verbs=list --namespaced -o name  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n <default>
 ```
