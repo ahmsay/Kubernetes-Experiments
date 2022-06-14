@@ -85,5 +85,5 @@ ssh <node-name> -- echo hello
 ## Listing All Resources
 You can't get all resources with `kubectl get all` command. To do that, you should use the following command:
 ```bash
-kubectl api-resources --verbs=list --namespaced -o name  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n <default>
+kubectl api-resources --verbs=list --namespaced -o name  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n <namespace>
 ```
